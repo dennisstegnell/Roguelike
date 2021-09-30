@@ -37,7 +37,6 @@ namespace Roguelike
                 {
                     leaveLevel = true;
                     Console.Clear();
-
                 }  
             }
 
@@ -209,18 +208,42 @@ namespace Roguelike
                     if (player.swimStamina == 0)
                     {
                         int count = 0;
-                        var a = gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord];
-                        if (a is not Passable && a is not null)
+                        IsMapObject a;
+
+                        if (gameBoard.PlayerXCoord == 0)
                             count++;
-                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord];
-                        if (a is not Passable && a is not null)
+                        if (gameBoard.PlayerXCoord == gameBoard.Width - 1)
                             count++;
-                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord-1];
-                        if (a is not Passable && a is not null)
+                        if (gameBoard.PlayerYCoord == 0)
                             count++;
-                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord+1];
-                        if (a is not Passable &&  a is not null)
+                        if (gameBoard.PlayerYCoord == gameBoard.Height - 1)
                             count++;
+                        
+                        if (gameBoard.PlayerXCoord < gameBoard.Width-1)
+                        {
+                            a = gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord];
+                            if (a is not Passable && a is not null)
+                                count++;
+                        }
+                        if(gameBoard.PlayerXCoord > 0)
+                        {
+                            a = gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord];
+                            if (a is not Passable && a is not null)
+                                count++;
+                        }
+                        if(gameBoard.PlayerYCoord > 0)
+                        {
+                            a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord-1];
+                            if (a is not Passable && a is not null)
+                                count++;
+                        }
+                        if(gameBoard.PlayerYCoord < gameBoard.Height-1)
+                        {
+                            a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord+1];
+                            if (a is not Passable &&  a is not null)
+                                count++;
+
+                        }
                         if (count == 4)
                         {
                             Console.Clear();
@@ -229,8 +252,7 @@ namespace Roguelike
                         }
                         else
                         {
-                            player.Swim();
-                            return true;
+                            player.Swim();                           
                         }
                     }
                     
