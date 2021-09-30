@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -26,16 +28,19 @@ namespace Roguelike
             Console.WriteLine();
             while (leaveLevel == false)
             {
-                PlayerMovement(gameBoard);
+                if(PlayerMovement(gameBoard) == false)
+                {
+                    return false;
+                }
+                    
                 if (gameBoard.PlayerXCoord == gameBoard.Width-1 && gameBoard.PlayerYCoord == gameBoard.Height-1)
                 {
                     leaveLevel = true;
                     Console.Clear();
 
-                }
-
-                
+                }  
             }
+
             return true;
             
             
@@ -47,15 +52,18 @@ namespace Roguelike
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord];
                 if (a is null || a is Passable || (a is Water && player.canSwim == true))
                 {
+                    
                     gameBoard.PlayerXCoord++;
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord - 1, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord);
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
                     else
-                        Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord].MapsIcon());
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord].MapsIcon();
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("P");
+                    Console.ForegroundColor = ConsoleColor.White;
                     return true;
                 }
                 else
@@ -71,14 +79,16 @@ namespace Roguelike
                 if ((a is null || a is Passable || (a is Water && player.canSwim == true)))
                 {
                     gameBoard.PlayerXCoord--;
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord + 1, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord + 2, gameBoard.Height - gameBoard.PlayerYCoord);
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
                     else
-                        Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord].MapsIcon());
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord].MapsIcon();
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("P");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.SetCursorPosition(0, gameBoard.Height + 2);
                     return true;
                 }
@@ -95,14 +105,16 @@ namespace Roguelike
                 if (a is null || a is Passable || (a is Water && player.canSwim == true))
                 {
                     gameBoard.PlayerYCoord++;
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord);
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord+1);
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1] is null)
                         Console.Write(" ");
                     else
-                        Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1].MapsIcon());
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1].MapsIcon();
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("P");
+                    Console.ForegroundColor = ConsoleColor.White;
                     //Console.SetCursorPosition(0, gameBoard.Height + 2);
                     //if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Passable)
                     //{
@@ -127,14 +139,16 @@ namespace Roguelike
                 if ((a is null || a is Passable || (a is Water && player.canSwim == true)))
                 {
 
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord - 1);
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
                     else
-                        Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapsIcon());
-                    Console.SetCursorPosition(gameBoard.PlayerXCoord, gameBoard.Height - gameBoard.PlayerYCoord);
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapsIcon();
+                    Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord+1);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("P");
+                    Console.ForegroundColor = ConsoleColor.White;
                     //Console.SetCursorPosition(0, gameBoard.Height + 2);
                     //if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord-1] is Passable)
                     //{
@@ -155,20 +169,17 @@ namespace Roguelike
             else
                 return false;
         }
-        public void PlayerMovement(Board gameBoard)
+        public bool PlayerMovement(Board gameBoard)
         {
             bool validMove = false;
             while (validMove == false)
             {
 
                 Console.Write(" ");
-                Console.SetCursorPosition(0, gameBoard.Height + 1);
+                Console.SetCursorPosition(0, gameBoard.Height + 2);
                 ConsoleKey input = Console.ReadKey().Key;
-                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is not Water)
-                {
-                    player.swimStamina = 3;
-                }
-                    switch (input)
+                
+                switch (input)
                 {
                     case ConsoleKey.A:
                         validMove = PlayerGoLeft(gameBoard);
@@ -183,29 +194,66 @@ namespace Roguelike
                         validMove = PlayerGoUp(gameBoard);
                         break;
                 }
-
-                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
+                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is not Water)
                 {
-                    Console.SetCursorPosition(20, gameBoard.Height + 2);
-                    Console.Write($"Swimming: {player.swimStamina} stamina left");
-                    player.Swim();
-
+                    player.swimStamina = 3;
+                    player.canSwim = true;
                 }
-                 
-            }
-            
+                else if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
+                {
+
+                    Console.SetCursorPosition(20, gameBoard.Height + 3);
+                    player.Swim();
+                    Console.Write($"Swimming: {player.swimStamina} stamina left");
+                    
+                    if (player.swimStamina == 0)
+                    {
+                        int count = 0;
+                        var a = gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord];
+                        if (a is not Passable && a is not null)
+                            count++;
+                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord];
+                        if (a is not Passable && a is not null)
+                            count++;
+                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord-1];
+                        if (a is not Passable && a is not null)
+                            count++;
+                        a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord+1];
+                        if (a is not Passable &&  a is not null)
+                            count++;
+                        if (count == 4)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Game over. Du drunkna, sopa");
+                            return false;
+                        }
+                        else
+                        {
+                            player.Swim();
+                            return true;
+                        }
+                    }
+                    
+                    
+                }
+            }           
                 
-                Console.SetCursorPosition(0, gameBoard.Height + 2);
+                Console.SetCursorPosition(0, gameBoard.Height + 3);
                 if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is IsMapObject)
                 {
-                    Console.Write(new string(' ', 15));
-                    Console.SetCursorPosition(0, gameBoard.Height + 2);
+                    if(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is not Water)
+                        Console.Write(new string(' ', Console.WindowWidth));
+                    else
+                        Console.Write(new string(' ', 15));
+                Console.SetCursorPosition(0, gameBoard.Height + 3);
                     Console.Write("Biome: ");
                     Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapObjectDescription());
                 }
                 else
                     Console.Write(new string(' ', Console.WindowWidth));
+            return true;
         }
+        
         }
 
     }

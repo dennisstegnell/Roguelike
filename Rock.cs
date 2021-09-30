@@ -20,9 +20,11 @@ namespace Roguelike
             Length = length;
         }
 
-        public char MapsIcon()
+        public void MapsIcon()
         {
-            return MapIcon;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(MapIcon);
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public string MapObjectDescription()
         {

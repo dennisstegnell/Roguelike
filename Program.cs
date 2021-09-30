@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Security;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Roguelike
@@ -8,16 +9,26 @@ namespace Roguelike
     {
         static void Main(string[] args)
         {
-            
-            Game game = new Game();
-            bool gameOver = false;
-            while(gameOver == false)
+            bool play = true;
+            while (play == true)
             {
-                
-                game.GenerateLevel();
-                game.level++;
-                
+                Console.Clear();
+                Game game = new Game();
+                bool gameOn = true;
+
+                while (gameOn == true)
+                {
+                    gameOn = game.GenerateLevel();
+                    game.level++;
+                }
+
+                Console.WriteLine("Play Again? Y/N");
+                if (Console.ReadLine().ToUpper() == "Y")
+                    play = true;
+                else
+                    play = false;
             }
+            
         }
     }
 }

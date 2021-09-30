@@ -24,20 +24,28 @@ namespace Roguelike
         }
         public void PrintBoard(int level)
         {
-            char a;
+
+            for (int i = 0; i < Width + 2; i++)
+            {
+                Console.Write("#");
+            }
+            Console.WriteLine();
             for (int i = Height-1; i>= 0; i--)
             {
-                for(int j = 0; j < Width; j++)
+                Console.Write("#");
+                for (int j = 0; j < Width; j++)
                 {
                     if (j == PlayerXCoord && i == PlayerYCoord)
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("P");
+                        Console.ForegroundColor = ConsoleColor.White;
                         continue;      
                     }
                     else if (MapGrid[j, i] is IsMapObject)
                     { 
-                        a = MapGrid[j,i].MapsIcon();
-                        Console.Write(a);   
+                        MapGrid[j,i].MapsIcon();
+                        
                     }
                     else
                         Console.Write(" ");
@@ -45,11 +53,11 @@ namespace Roguelike
                 Console.Write('#');
                 Console.WriteLine();
             }
-            for(int i =0; i<Width+1; i++)
+            for(int i =0; i<Width+2; i++)
             {
                 Console.Write("#");
             }
-            Console.SetCursorPosition(45, Height + 1);
+            Console.SetCursorPosition(45, Height + 2);
             Console.Write("Level " + level);
 
         }
@@ -81,8 +89,8 @@ namespace Roguelike
 
             else
                 water = lake;
-            a = rngManip.Next(0, Width);
-            b = rngManip.Next(0, Height);
+            a = rngManip.Next(1, Width);
+            b = rngManip.Next(1, Height);
 
             for (int i = 0; i < water.Heigth; i++)
             {
@@ -151,8 +159,8 @@ namespace Roguelike
                 rock = largeRock;
 
 
-            a = rngManip.Next(0, Width);
-            b = rngManip.Next(0, Height);
+            a = rngManip.Next(1, Width);
+            b = rngManip.Next(1, Height);
 
             for (int i = 0; i < rock.Heigth; i++)
             {

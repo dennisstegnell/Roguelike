@@ -24,8 +24,13 @@ namespace Roguelike
         {
             if (swimStamina == 0)
                 canSwim = false;
-            else
+            if (swimStamina > 0)
+            {
                 swimStamina--;
+            }
+
+            
+          
         }
         
     }

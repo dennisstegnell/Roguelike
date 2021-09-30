@@ -19,9 +19,11 @@ namespace Roguelike
             Heigth = heigth;
             Length = length;
         }
-        public char MapsIcon()
+        public void MapsIcon()
         {
-            return MapIcon;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(MapIcon);
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public string MapObjectDescription()
         {

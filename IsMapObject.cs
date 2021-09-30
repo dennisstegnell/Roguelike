@@ -8,7 +8,7 @@ namespace Roguelike
 {
     public interface IsMapObject
     {
-       char MapsIcon();
+       void MapsIcon();
        string MapObjectDescription();
     }
 }
