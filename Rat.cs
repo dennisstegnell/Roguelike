@@ -15,6 +15,7 @@ namespace Roguelike
             Attack = 2 + Level*2;
             HP = 25 + Level*10;
             Name = "Rat";
+            XP = 11 + level * 5;
             
             
         }

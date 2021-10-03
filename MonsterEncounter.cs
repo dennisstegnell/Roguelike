@@ -38,7 +38,9 @@ namespace Roguelike
                     Console.SetCursorPosition(30, 8);
                     Console.Write($"HP LEFT : {monster.HP}");
                     Console.SetCursorPosition(56, 20);
-                    Console.Write("VICTORY");
+                    
+                    Console.WriteLine("VICTORY");
+                    CalculateCombat(monster);
                     Console.ReadLine();
                     break;  
                 }
@@ -55,6 +57,23 @@ namespace Roguelike
             }
             return true;
         }
+
+        private void CalculateCombat(IsMonster monster)
+        {
+            Player.PlayerXP += monster.XP;
+            
+            if(Player.PlayerXP > Player.LvlUpValues[Player.PlayerLvL])
+            {
+                Player.PlayerLvL++;
+                Console.WriteLine($"DING DU BLEV LVL {Player.PlayerLvL}");
+                Console.WriteLine("YOU GAIN 20 MAX HP");
+                Console.WriteLine("YOU GAIN 1 ATTACK");
+                Player.Attack++;
+                Player.MaxHP += 20;
+                Player.CurrentHP = Player.MaxHP;
+            }
+        }
+
         private void PrintBattle(IsMonster monster)
         {
             Console.SetCursorPosition(56, 2);

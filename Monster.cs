@@ -12,5 +12,6 @@ namespace Roguelike
         public int HP { get; set; }
         public string Name { get; set; }
         public int Level { get; set; }
+        public int XP { get; set; }
     }
 }

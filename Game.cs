@@ -200,7 +200,7 @@ namespace Roguelike
             bool validMove = false;
             while (validMove == false)
             {
-
+                Console.SetCursorPosition(0, gameBoard.Height + 3);
                 Console.Write(" ");
                 Console.SetCursorPosition(0, gameBoard.Height + 3);
                 ConsoleKey input = Console.ReadKey().Key;
