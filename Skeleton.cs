@@ -12,7 +12,7 @@ namespace Roguelike
         public Skeleton(int level)
         {
             Attack = 3 + level;
-            HP = 18 + level*10;
+            HP = 25 + level*10;
             Name = "SKELETON";
             Level = level;
             XP = 12 + level * 6;

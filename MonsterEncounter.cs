@@ -161,19 +161,22 @@ namespace Roguelike
 
         public IsMonster GenerateMonster()
         {
-
             int a;
             Random rng = new Random();
-            a = rng.Next(0, 10);
+            a = rng.Next(1, 4);
             {
-                if (a < 5)
+                if (a == 1)
                 {
                     
                     return new Rat(Level);
                 }
-                else
+                else if (a == 2)
                 {
                     return new Skeleton(Level);
+                }
+                else
+                {
+                    return new Zombie(Level);
                 }
             }
 
