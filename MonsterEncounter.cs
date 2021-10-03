@@ -11,6 +11,7 @@ namespace Roguelike
     {
         public Player Player { get; set; }
         public int Level { get; set; }
+        public Random rng { get; set; } = new Random();
 
 
         public MonsterEncounter(Player player, int level)
@@ -93,38 +94,66 @@ namespace Roguelike
         }
         private void MonsterMove(IsMonster monster)
         {
+            int rngdodge = rng.Next(1, 5);
+            int rngdamage = rng.Next(-1, 2);
+            int thisattack = rngdamage + monster.Attack;
+
+            if (rngdodge != 1)
+            {
+                Player.CurrentHP -= thisattack;
+                Console.SetCursorPosition(43, 15);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(43, 15);
+                Console.Write($"{monster.Name} Attacks {Player.Name} for {thisattack} damage!".ToUpper());
+                Console.SetCursorPosition(80, 8);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(80, 8);
+                Console.Write($"HP LEFT : {Player.CurrentHP}");
+                Console.SetCursorPosition(56, 16);
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.SetCursorPosition(43, 15);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(43, 15);
+                Console.Write($"Nice Moves, You managed to dodge The {monster.Name }'s attack!");
+                Console.ReadLine();
+            }
             
-            Player.CurrentHP -= monster.Attack;
-            Console.SetCursorPosition(45, 15);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(45, 15);
-            Console.Write($"{monster.Name} Attacks {Player.Name} for {monster.Attack} damage!".ToUpper());
-            Console.SetCursorPosition(80, 8);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(80, 8);
-            Console.Write($"HP LEFT : {Player.CurrentHP}");
-            Console.SetCursorPosition(56, 16);
-            Console.ReadLine();
 
 
         }
 
         private void PlayerMove(IsMonster monster)
         {
-            
-            monster.HP -= Player.Attack;
-            Console.SetCursorPosition(45,15);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(45, 15);
-            Console.Write($"You Attack {monster.Name} for {Player.Attack} damage!".ToUpper());
-            Console.SetCursorPosition(30, 8);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(30, 8);
-            Console.Write($"HP LEFT : {monster.HP}");
-            Console.SetCursorPosition(80, 8);
-            Console.Write($"HP LEFT : {Player.CurrentHP}");
-            Console.SetCursorPosition(56, 16);
-            Console.ReadLine();
+            int rngdodge = rng.Next(1, 5);
+            int rngdamage = rng.Next(-1, 2);
+            int thisattack = rngdamage + Player.Attack;
+            if (rngdodge != 1)
+            {
+                monster.HP -= thisattack;
+                Console.SetCursorPosition(43, 15);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(43, 15);
+                Console.Write($"You Attack {monster.Name} for {thisattack} damage!".ToUpper());
+                Console.SetCursorPosition(30, 8);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(30, 8);
+                Console.Write($"HP LEFT : {monster.HP}");
+                Console.SetCursorPosition(80, 8);
+                Console.Write($"HP LEFT : {Player.CurrentHP}");
+                Console.SetCursorPosition(56, 16);
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.SetCursorPosition(43, 15);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(43, 15);
+                Console.Write($"Dang it, The {monster.Name } dodged your attack!");
+                Console.ReadLine();
+            }
 
 
         }
