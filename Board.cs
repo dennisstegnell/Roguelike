@@ -42,6 +42,13 @@ namespace Roguelike
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;      
                     }
+                    if (j == Width-1 && i == Height-1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("E");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
                     else if (MapGrid[j, i] is IsMapObject)
                     { 
                         MapGrid[j,i].MapsIcon();
@@ -57,7 +64,7 @@ namespace Roguelike
             {
                 Console.Write("#");
             }
-            Console.SetCursorPosition(45, Height + 2);
+            Console.SetCursorPosition(75, Height + 2);
             Console.Write("Level " + level);
 
         }
@@ -68,7 +75,7 @@ namespace Roguelike
                 AddRock();
                 AddWater();
             }
-            for(int i = 0; i <= (Height + Width); i++)
+            for(int i = 0; i <= (Height + Width)*2; i++)
             {
                 AddTree();
             }
@@ -89,14 +96,16 @@ namespace Roguelike
 
             else
                 water = lake;
-            a = rngManip.Next(1, Width);
-            b = rngManip.Next(1, Height);
+            a = rngManip.Next(0, Width);
+            b = rngManip.Next(0, Height);
 
             for (int i = 0; i < water.Heigth; i++)
             {
                 for (int j = 0; j < water.Length; j++)
                 {
                     if (i + a >= Width || j + b >= Height)
+                        continue;
+                    if ((i + a >= Width - 2 || i + a < 1) && (j + b >= Height - 2 || j + b < 1))
                         continue;
                     if (MapGrid[i + a, j + b] == null)
                         MapGrid[i + a, j + b] = water;
@@ -131,6 +140,8 @@ namespace Roguelike
                 {
                     if (i + a >= Width || j + b >= Height)
                         continue;
+                    if (i + a == Width - 1 && j + b == Height - 1)
+                        continue;
                     MapGrid[i + a, j + b] = tree;
                    
                 }
@@ -159,8 +170,8 @@ namespace Roguelike
                 rock = largeRock;
 
 
-            a = rngManip.Next(1, Width);
-            b = rngManip.Next(1, Height);
+            a = rngManip.Next(0, Width);
+            b = rngManip.Next(0, Height);
 
             for (int i = 0; i < rock.Heigth; i++)
             {

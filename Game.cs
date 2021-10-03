@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -24,20 +25,46 @@ namespace Roguelike
             bool leaveLevel = false;
             gameBoard.FillBoardWithMapObjects();
             gameBoard.PrintBoard(level);
-            
+            //Console.SetCursorPosition(96, gameBoard.Height + 2);
+            //Console.Write($"HP: {player.CurrentHP} / {player.MaxHP}");
+            int safeZone = 0;
             Console.WriteLine();
             while (leaveLevel == false)
             {
-                if(PlayerMovement(gameBoard) == false)
+                Console.SetCursorPosition(91, gameBoard.Height + 2);
+                Console.Write($"HP: {player.CurrentHP} / {player.MaxHP}");
+                if (PlayerMovement(gameBoard) == false)
                 {
                     return false;
                 }
                     
-                if (gameBoard.PlayerXCoord == gameBoard.Width-1 && gameBoard.PlayerYCoord == gameBoard.Height-1)
+                if (gameBoard.PlayerXCoord == gameBoard.Width-1 && gameBoard.PlayerYCoord == gameBoard.Height-1) // höger hörn uppe = EXIT
                 {
                     leaveLevel = true;
                     Console.Clear();
-                }  
+                }
+                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Tree) // Träd genererar encounters, uppdaterar player stats efteråt
+                {
+                    MonsterEncounter encounter = new MonsterEncounter(player, level);
+                    
+                    Random rng = new Random();
+                    
+                    int a = rng.Next(0, 10);  // Random kollar om Tree rutan ska generera en battle eller inte, safeZone ger 2 rutor utan battle efter avslutad battle
+                    if (a > 7 && safeZone > 2)
+                    {
+                        if(encounter.GenerateBattle() == false)
+                        {
+                            return false;
+                        }
+                        Console.Clear();
+                        gameBoard.PrintBoard(level);
+                        Console.SetCursorPosition(96, gameBoard.Height + 2);
+                        Console.Write($"HP: {player.CurrentHP}");               // Uppdaterar boarden med rätt HP på spelaren
+                        safeZone = 0;
+                    }
+                    else
+                        safeZone++;
+                }
             }
 
             return true;
@@ -175,7 +202,7 @@ namespace Roguelike
             {
 
                 Console.Write(" ");
-                Console.SetCursorPosition(0, gameBoard.Height + 2);
+                Console.SetCursorPosition(0, gameBoard.Height + 3);
                 ConsoleKey input = Console.ReadKey().Key;
                 
                 switch (input)
@@ -201,7 +228,7 @@ namespace Roguelike
                 else if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
                 {
 
-                    Console.SetCursorPosition(20, gameBoard.Height + 3);
+                    Console.SetCursorPosition(20, gameBoard.Height + 2);
                     player.Swim();
                     Console.Write($"Swimming: {player.swimStamina} stamina left");
                     
@@ -263,16 +290,27 @@ namespace Roguelike
                 Console.SetCursorPosition(0, gameBoard.Height + 3);
                 if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is IsMapObject)
                 {
-                    if(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is not Water)
-                        Console.Write(new string(' ', Console.WindowWidth));
-                    else
-                        Console.Write(new string(' ', 15));
-                Console.SetCursorPosition(0, gameBoard.Height + 3);
+                    Console.Write(new string(' ', 45));
+                    Console.SetCursorPosition(0, gameBoard.Height + 2);
                     Console.Write("Biome: ");
                     Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapObjectDescription());
+                    if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
+                    {
+                        Console.SetCursorPosition(20, gameBoard.Height + 2);
+                        Console.Write($"Swimming: {player.swimStamina} stamina left");
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(20, gameBoard.Height + 2);
+                        Console.Write(new string(' ', 45));
+
+                    }
                 }
                 else
-                    Console.Write(new string(' ', Console.WindowWidth));
+                {
+                    Console.SetCursorPosition(0, gameBoard.Height + 2);
+                    Console.Write(new string(' ', 45));
+                }
             return true;
         }
         

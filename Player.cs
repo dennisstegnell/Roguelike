@@ -8,11 +8,12 @@ namespace Roguelike
 {
     public class Player
     {
-        public int HP { get; set; } = 10;
-        public string Name { get; set; }
+        public int CurrentHP { get; set; } = 50;
+        public int MaxHP { get; set; } = 50;
+        public string Name { get; set; } = "PLAYER";
         public bool canSwim { get; set; } = true;
         public int swimStamina { get; set; } = 3;
-
+        public int Attack { get; set; } = 6;
         public char MapIcon { get; set; } = 'P';
 
         public Player()
@@ -28,10 +29,8 @@ namespace Roguelike
             {
                 swimStamina--;
             }
-
-            
-          
         }
+        
         
     }
 }
