@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
+    public enum MapTypes
+    {
+        Balanced,
+        Forest,
+        Mountain,
+        Swamp
+    }
     public class Board
     {
         public int Width { get; set; }
@@ -70,15 +77,23 @@ namespace Roguelike
         }
         public void FillBoardWithMapObjects()
         {
-            for (int i = 0; i <= (Height+Width)/2; i++)
+            Random rng = new Random();
+            int a = rng.Next(1, 5);
+            switch(a)
             {
-                AddRock();
-                AddWater();
-            }
-            for(int i = 0; i <= (Height + Width)*2; i++)
-            {
-                AddTree();
-            }
+                case 1:
+                    Balanced();
+                    break;
+                case 2:
+                    Forest();
+                    break;
+                case 3:
+                    Mountain();
+                    break;
+                case 4:
+                    Swamp();
+                    break;
+            }            
         }
         public void AddWater()
         {
@@ -181,11 +196,73 @@ namespace Roguelike
                         continue;
                     if ((i + a >= Width - 2 || i + a < 1) && (j + b >= Height - 2 || j + b < 1))
                         continue;
+                    if (i + a < 1 && j + b < 1)
+                        continue;
                     else
                         MapGrid[i + a, j + b] = rock;
                 }
             }
 
+        }
+        public void Balanced()
+        {
+            for (int i = 0; i <= (Height + Width) / 2; i++)
+            {
+                AddRock();
+                AddWater();
+            }
+            for (int i = 0; i <= (Height + Width) * 2; i++)
+            {
+                AddTree();
+            }
+
+        }
+        public void Forest()
+        {
+
+            for (int i = 0; i <= (Height + Width) / 2; i++)
+            {
+                AddRock();
+                AddWater();
+            }
+            for (int i = 0; i <= (Height + Width) * 3; i++)
+            {
+                AddTree();
+            }
+        }
+        public void Mountain()
+        {
+
+            for (int i = 0; i <= (Height + Width)/3; i++)
+            {
+                
+                AddWater();
+            }
+            for (int i = 0; i <= (Height + Width); i++)
+            {
+                AddRock();              
+            }
+            for (int i = 0; i <= (Height + Width)*1.5; i++)
+            {
+                AddTree();
+            }
+        }
+        public void Swamp()
+        {
+
+            for (int i = 0; i <= (Height + Width) / 3; i++)
+            {
+                AddRock();
+                
+            }
+            for (int i = 0; i <= (Height + Width); i++)
+            {
+                AddWater();
+            }
+            for (int i = 0; i <= (Height + Width) * 1.5; i++)
+            {
+                AddTree();
+            }
         }
     }
 }

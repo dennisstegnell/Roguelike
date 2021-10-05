@@ -71,6 +71,11 @@ namespace Roguelike
                 Player.Attack++;
                 Player.MaxHP += 20;
                 Player.CurrentHP = Player.MaxHP;
+                if (Player.PlayerLvL % 2 == 0)
+                {
+                    Player.MaxSwimStamina++;
+                    Console.WriteLine("YOU GAIN 1 SWIM STAMINA");
+                }
             }
         }
 

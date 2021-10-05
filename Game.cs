@@ -76,7 +76,7 @@ namespace Roguelike
             if (gameBoard.PlayerXCoord < gameBoard.Width-1)
             {
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord];
-                if (a is null || a is Passable || (a is Water && player.canSwim == true))
+                if (a is null || a is Passable || (a is Water && player.CanSwim == true))
                 {
                     
                     gameBoard.PlayerXCoord++;
@@ -102,7 +102,7 @@ namespace Roguelike
             if (gameBoard.PlayerXCoord > 0)
             {
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord];
-                if ((a is null || a is Passable || (a is Water && player.canSwim == true)))
+                if ((a is null || a is Passable || (a is Water && player.CanSwim == true)))
                 {
                     gameBoard.PlayerXCoord--;
                     Console.SetCursorPosition(gameBoard.PlayerXCoord + 2, gameBoard.Height - gameBoard.PlayerYCoord);
@@ -128,7 +128,7 @@ namespace Roguelike
             if (gameBoard.PlayerYCoord < gameBoard.Height-1)
             {
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord + 1];
-                if (a is null || a is Passable || (a is Water && player.canSwim == true))
+                if (a is null || a is Passable || (a is Water && player.CanSwim == true))
                 {
                     gameBoard.PlayerYCoord++;
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord+1);
@@ -162,7 +162,7 @@ namespace Roguelike
             if (gameBoard.PlayerYCoord > 0)
             {
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1];
-                if ((a is null || a is Passable || (a is Water && player.canSwim == true)))
+                if ((a is null || a is Passable || (a is Water && player.CanSwim == true)))
                 {
 
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
@@ -222,17 +222,17 @@ namespace Roguelike
                 }
                 if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is not Water)
                 {
-                    player.swimStamina = 3;
-                    player.canSwim = true;
+                    player.CurrentSwimStamina = player.MaxSwimStamina;
+                    player.CanSwim = true;
                 }
                 else if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
                 {
 
                     Console.SetCursorPosition(20, gameBoard.Height + 2);
                     player.Swim();
-                    Console.Write($"Swimming: {player.swimStamina} stamina left");
+                    Console.Write($"Swimming: {player.CurrentSwimStamina} stamina left");
                     
-                    if (player.swimStamina == 0)
+                    if (player.CurrentSwimStamina == 0)
                     {
                         int count = 0;
                         IsMapObject a;
@@ -297,7 +297,7 @@ namespace Roguelike
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
                     {
                         Console.SetCursorPosition(20, gameBoard.Height + 2);
-                        Console.Write($"Swimming: {player.swimStamina} stamina left");
+                        Console.Write($"Swimming: {player.CurrentSwimStamina} stamina left");
                     }
                     else
                     {

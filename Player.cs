@@ -14,8 +14,9 @@ namespace Roguelike
         public List<int> LvlUpValues { get; set; } = new List<int> { 0,30, 65, 120, 184, 270, 500 };
         public int PlayerLvL { get; set; } = 1;
         public int PlayerXP { get; set; } = 0;
-        public bool canSwim { get; set; } = true;
-        public int swimStamina { get; set; } = 3;
+        public bool CanSwim { get; set; } = true;
+        public int CurrentSwimStamina { get; set; } = 3;
+        public int MaxSwimStamina { get; set; } = 3;
         public int Attack { get; set; } = 6;
         //public char MapIcon { get; set; } = 'P';
 
@@ -26,11 +27,11 @@ namespace Roguelike
 
         public void Swim()
         {
-            if (swimStamina == 0)
-                canSwim = false;
-            if (swimStamina > 0)
+            if (CurrentSwimStamina == 0)
+                CanSwim = false;
+            if (CurrentSwimStamina > 0)
             {
-                swimStamina--;
+                CurrentSwimStamina--;
             }
         }
         

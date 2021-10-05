@@ -15,7 +15,8 @@ namespace Roguelike
                 Console.Clear();
                 Game game = new Game();
                 bool gameOn = true;
-
+                
+                
                 while (gameOn == true)
                 {
                     gameOn = game.GenerateLevel();
