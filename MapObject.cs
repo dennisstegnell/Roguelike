@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    class MapObject
+    public abstract class MapObject
     {
+        public char MapIcon { get; set; }
+        public int Heigth { get; set; }
+        public int Length { get; set; }
+        public string Description { get; set; }
+        public ConsoleColor MapColor { get; set; }
+
+
+        public abstract void MapsIcon();
+
+        
+        
     }
 }

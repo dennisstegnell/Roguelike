@@ -29,6 +29,7 @@ namespace Roguelike
             //Console.Write($"HP: {player.CurrentHP} / {player.MaxHP}");
             int safeZone = 0;
             Console.WriteLine();
+
             while (leaveLevel == false)
             {
                 Console.SetCursorPosition(91, gameBoard.Height + 2);
@@ -235,7 +236,7 @@ namespace Roguelike
                     if (player.CurrentSwimStamina == 0)
                     {
                         int count = 0;
-                        IsMapObject a;
+                        MapObject a;
 
                         if (gameBoard.PlayerXCoord == 0)
                             count++;
@@ -288,12 +289,12 @@ namespace Roguelike
             }           
                 
                 Console.SetCursorPosition(0, gameBoard.Height + 3);
-                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is IsMapObject)
+                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is MapObject)
                 {
                     Console.Write(new string(' ', 45));
                     Console.SetCursorPosition(0, gameBoard.Height + 2);
                     Console.Write("Biome: ");
-                    Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapObjectDescription());
+                    Console.Write(gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].Description);
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Water)
                     {
                         Console.SetCursorPosition(20, gameBoard.Height + 2);

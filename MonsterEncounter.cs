@@ -22,9 +22,9 @@ namespace Roguelike
 
         public bool GenerateBattle()
         {
-            List<IsMonster> listOfMobs = new List<IsMonster>();             //Lista av monster vid implementering av fler mobs per battle
+            List<Monster> listOfMobs = new List<Monster>();             //Lista av monster vid implementering av fler mobs per battle
             Console.Clear();
-            IsMonster monster;
+            Monster monster;
             monster = GenerateMonster();                                   // Genererar vilken monsterklass som helst vid IsMonster interface, kan göra regler för vilka mobs per vilken lvl
             listOfMobs.Add(monster);                                       // Kan adda det i monster props kanske? Vet ej än.
             PrintBattle(monster);      
@@ -45,7 +45,7 @@ namespace Roguelike
                     Console.ReadLine();
                     break;  
                 }
-                foreach(IsMonster mob in listOfMobs)
+                foreach(Monster mob in listOfMobs)
                 {
                     MonsterMove(mob); 
                 }
@@ -59,7 +59,7 @@ namespace Roguelike
             return true;
         }
 
-        private void CalculateCombat(IsMonster monster)
+        private void CalculateCombat(Monster monster)
         {
             Player.PlayerXP += monster.XP;
             
@@ -80,7 +80,7 @@ namespace Roguelike
             }
         }
 
-        private void PrintBattle(IsMonster monster)
+        private void PrintBattle(Monster monster)
         {
             Console.SetCursorPosition(56, 2);
             Console.Write("BATTLE");
@@ -97,7 +97,7 @@ namespace Roguelike
             Console.SetCursorPosition(56, 16);
             Console.ReadLine();
         }
-        private void MonsterMove(IsMonster monster)
+        private void MonsterMove(Monster monster)
         {
             int rngdodge = rng.Next(1, 5);
             int rngdamage = rng.Next(-1, 2);
@@ -130,7 +130,7 @@ namespace Roguelike
 
         }
 
-        private void PlayerMove(IsMonster monster)
+        private void PlayerMove(Monster monster)
         {
             int rngdodge = rng.Next(1, 5);
             int rngdamage = rng.Next(-1, 2);
@@ -164,7 +164,7 @@ namespace Roguelike
         }
 
 
-        public IsMonster GenerateMonster()
+        public Monster GenerateMonster()
         {
             int a;
             Random rng = new Random();

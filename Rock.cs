@@ -6,30 +6,25 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    class Rock : MapObject, IsMapObject
+    public class Rock : MapObject
     {
-        public char  MapIcon { get; set; } = 'O';
-        public int Heigth { get; set; }
-        public int  Length { get; set; }
-        public string Description { get; set; } = "Rock";
-
-
+        
         public Rock(int heigth, int length)
         {
             Heigth = heigth;
             Length = length;
+            Description = "Rock";
+            MapIcon = 'O';
+            MapColor = ConsoleColor.DarkGray;
         }
 
-        public void MapsIcon()
+        public override void MapsIcon()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(MapIcon);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public string MapObjectDescription()
-        {
-            return Description;
-        }
+        
 
     }
 

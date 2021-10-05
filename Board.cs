@@ -17,7 +17,7 @@ namespace Roguelike
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public IsMapObject[,] MapGrid { get; set; }
+        public MapObject[,] MapGrid { get; set; }
         public int PlayerXCoord { get; set; } = 0;
         public int PlayerYCoord { get; set; } = 0;
 
@@ -26,7 +26,7 @@ namespace Roguelike
         {
             Width = width;
             Height = height;
-            MapGrid = new IsMapObject[Width, Height];
+            MapGrid = new MapObject[Width, Height];
             
         }
         public void PrintBoard(int level)
@@ -56,7 +56,7 @@ namespace Roguelike
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
-                    else if (MapGrid[j, i] is IsMapObject)
+                    else if (MapGrid[j, i] is MapObject)
                     { 
                         MapGrid[j,i].MapsIcon();
                         
