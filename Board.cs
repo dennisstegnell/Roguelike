@@ -73,7 +73,6 @@ namespace Roguelike
             }
             Console.SetCursorPosition(75, Height + 2);
             Console.Write("Level " + level);
-
         }
         public void FillBoardWithMapObjects()
         {
@@ -124,8 +123,6 @@ namespace Roguelike
                         continue;
                     if (MapGrid[i + a, j + b] == null)
                         MapGrid[i + a, j + b] = water;
-                    
-
                 }
             }
 

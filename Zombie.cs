@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    class Zombie : Monster, IsMonster
+    class Zombie : Monster
     {
             public Zombie(int level)
             {
@@ -15,7 +15,6 @@ namespace Roguelike
                 Name = "Zombie";
                 Level = level;
                 XP = 15 + level * 6;
-
             }
 
             public string GetStats()

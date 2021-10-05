@@ -69,8 +69,7 @@ namespace Roguelike
             }
 
             return true;
-            
-            
+ 
         }
         public bool PlayerGoRight(Board gameBoard)
         {
@@ -287,7 +286,6 @@ namespace Roguelike
                     
                 }
             }           
-                
                 Console.SetCursorPosition(0, gameBoard.Height + 3);
                 if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is MapObject)
                 {

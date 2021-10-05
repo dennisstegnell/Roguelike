@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Roguelike
 {
-    public class Skeleton : Monster, IsMonster
+    public class Skeleton : Monster
     {
 
         public Skeleton(int level)
