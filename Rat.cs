@@ -12,10 +12,10 @@ namespace Roguelike
         public Rat(int level)
         {
             Level = level;
-            Attack = 2 + Level*2;
-            HP = 25 + Level*10;
+            Attack = 1 + Level*2;
+            HP = 20 + Level*10;
             Name = "Rat";
-            XP = 11 + level * 5;
+            XP = 9 + level * 5;
             
             
         }
