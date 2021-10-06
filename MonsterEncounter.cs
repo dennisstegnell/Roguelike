@@ -132,7 +132,26 @@ namespace Roguelike
 
         private void PlayerMove(Monster monster)
         {
-            int rngdodge = rng.Next(1, 5);
+            foreach (var item in Player.Inventory)
+            {
+                if (item.Description == "HP_Potion")
+                {
+                    Items a = new Items();
+                    Console.SetCursorPosition(55, 15);
+                    Console.Write("Press 'I' to use HP_Potion or Enter to keep fighting");
+                    ConsoleKey input = Console.ReadKey().Key;
+
+                    switch (input)
+                    {
+                        case ConsoleKey.I:
+                            a.effect(Player,a);
+                            break;
+                        case ConsoleKey.Enter:
+                            break;
+                    }
+                }
+            }
+                int rngdodge = rng.Next(1, 5);
             int rngdamage = rng.Next(-1, 2);
             int thisattack = rngdamage + Player.Attack;
             if (rngdodge != 1)

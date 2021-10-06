@@ -201,6 +201,22 @@ namespace Roguelike
             }
 
         }
+        public void AddItem()
+        {
+            int a,b,c;
+            Random rngManip = new Random();
+            Items item = new Items();
+            a = rngManip.Next(0, Width);
+            b = rngManip.Next(0, Height);
+
+            c = rngManip.Next(0, 25);
+            if (c == 1)
+            {
+                MapGrid[a, b] = item;
+            }
+                
+            
+        }
         public void Balanced()
         {
             for (int i = 0; i <= (Height + Width) / 2; i++)
@@ -211,6 +227,10 @@ namespace Roguelike
             for (int i = 0; i <= (Height + Width) * 2; i++)
             {
                 AddTree();
+            }
+            for (int i = 0; i <= (Height + Width) / 3 ; i++)
+            {
+                AddItem();
             }
 
         }
@@ -225,6 +245,10 @@ namespace Roguelike
             for (int i = 0; i <= (Height + Width) * 3; i++)
             {
                 AddTree();
+            }
+            for (int i = 0; i <= (Height + Width) / 3; i++)
+            {
+                AddItem();
             }
         }
         public void Mountain()
@@ -243,6 +267,10 @@ namespace Roguelike
             {
                 AddTree();
             }
+            for (int i = 0; i <= (Height + Width) / 3; i++)
+            {
+                AddItem();
+            }
         }
         public void Swamp()
         {
@@ -260,7 +288,12 @@ namespace Roguelike
             {
                 AddTree();
             }
+            for (int i = 0; i <= (Height + Width) / 3; i++)
+            {
+                AddItem();
+            }
         }
+
     }
 }
 

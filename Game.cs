@@ -66,6 +66,12 @@ namespace Roguelike
                     else
                         safeZone++;
                 }
+                if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Items)
+                {
+                    var a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord];
+                    Items item = new Items();
+                    item.randomizeitem(player);
+                }
             }
 
             return true;
@@ -84,6 +90,11 @@ namespace Roguelike
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
+                    else if (gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord] is Items)
+                    {
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord] = null;
+                        Console.Write(" ");
+                    }
                     else
                         gameBoard.MapGrid[gameBoard.PlayerXCoord - 1, gameBoard.PlayerYCoord].MapsIcon();
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
@@ -109,6 +120,11 @@ namespace Roguelike
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
+                    else if (gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord] is Items)
+                    {
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord] = null;
+                        Console.Write(" ");
+                    }
                     else
                         gameBoard.MapGrid[gameBoard.PlayerXCoord + 1, gameBoard.PlayerYCoord].MapsIcon();
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
@@ -135,6 +151,11 @@ namespace Roguelike
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1] is null)
                         Console.Write(" ");
+                    else if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1] is Items)
+                    {
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord- 1] = null;
+                        Console.Write(" ");
+                    }
                     else
                         gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1].MapsIcon();
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
@@ -164,11 +185,15 @@ namespace Roguelike
                 var a = gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord - 1];
                 if ((a is null || a is Passable || (a is Water && player.CanSwim == true)))
                 {
-
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord);
 
                     if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is null)
                         Console.Write(" ");
+                    else if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is Items)
+                    {
+                        gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] = null;
+                        Console.Write(" "); 
+                    }
                     else
                         gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord].MapsIcon();
                     Console.SetCursorPosition(gameBoard.PlayerXCoord+1, gameBoard.Height - gameBoard.PlayerYCoord+1);
@@ -281,11 +306,9 @@ namespace Roguelike
                         {
                             player.Swim();                           
                         }
-                    }
-                    
-                    
+                    }   
                 }
-            }           
+            }
                 Console.SetCursorPosition(0, gameBoard.Height + 3);
                 if (gameBoard.MapGrid[gameBoard.PlayerXCoord, gameBoard.PlayerYCoord] is MapObject)
                 {
@@ -311,7 +334,7 @@ namespace Roguelike
                     Console.Write(new string(' ', 45));
                 }
             return true;
-        }
+            }
         
         }
 

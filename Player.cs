@@ -18,6 +18,8 @@ namespace Roguelike
         public int CurrentSwimStamina { get; set; } = 3;
         public int MaxSwimStamina { get; set; } = 3;
         public int Attack { get; set; } = 6;
+
+        public List<MapObject> Inventory { get; set; } = new List<MapObject> { };
         //public char MapIcon { get; set; } = 'P';
 
         public Player()
@@ -33,6 +35,11 @@ namespace Roguelike
             {
                 CurrentSwimStamina--;
             }
+        }
+
+        public void AddToInventory(MapObject item)
+        {
+            Inventory.Add(item);
         }
         
         
